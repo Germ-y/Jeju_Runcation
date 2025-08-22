@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>🍊 감귤 실험실 🍊</title>
+  <style>
+    body {
+      font-family: "Arial", sans-serif;
+      background: #fffaf0;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #ff7f50;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      font-size: 1.5em;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      background: #ffffff;
+      border: 2px solid #ffa94d;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(255, 140, 0, 0.2);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    .sliders {
+      flex: 2;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .slider-group {
+      margin-bottom: 15px;
+    }
+    label {
+      font-weight: bold;
+      color: #ff8c00;
+      font-size: 0.9em;
+    }
+    input[type=range] {
+      width: 65%;
+      height: 6px;
+      border-radius: 4px;
+      background: #ffd8a8;
+      accent-color: #ff9933;
+      outline: none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ff7f50;
+      cursor: pointer;
+      border: 2px solid white;
+      box-shadow: 0 0 2px rgba(0,0,0,0.3);
+      margin-top: -4px;
+    }
+    span.value {
+      font-weight: bold;
+      margin-left: 6px;
+      font-size: 0.85em;
+      color: #ff4500;
+    }
+    .prediction-circle {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffb347, #ff7f50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(255, 120, 0, 0.3);
+      border: 3px solid #ff9933;
+      font-size: 1.4em;
+      font-weight: bold;
+      color: white;
+      text-align: center;
+      position: sticky;
+      top: 100px;
+      margin-right: 80px;
+      flex-shrink: 0;
+      transition: background 0.3s ease;
+    }
+    .prediction-circle::after {
+      content: "🍊";
+      position: absolute;
+      top: -30px;
+      font-size: 2.2em;
+    }
+  </style>
+</head>
+<body>
+  <h2>🍊 감귤 실험실 🍊</h2>
+  <div class="container">
+
+    <div class="sliders">
+
+      <div class="slider-group">
+        <label>🧡 사람들이 귤을 더 많이 먹는다면?</label><br>
+        <input type="range" id="감귤_과일소비량" min="5" max="20" step="0.1" value="12" oninput="updatePrediction()">
+        <span class="value" id="val_감귤_과일소비량">12</span>
+      </div>
+      <div class="slider-group">
+        <label>🍑 사람들이 복숭아를 더 많이 먹는다면?</label><br>
+        <input type="range" id="복숭아_과일소비량" min="2" max="6" step="0.1" value="3.5" oninput="updatePrediction()">
+        <span class="value" id="val_복숭아_과일소비량">3.5</span>
+      </div>
+
+      <div class="slider-group">
+        <label>🌳 노지 온주밀감 생산성이 높아진다면?</label><br>
+        <input type="range" id="노지_온주밀감_생산성" min="20" max="40" step="0.1" value="30" oninput="updatePrediction()">
+        <span class="value" id="val_노지_온주밀감_생산성">30</span>
+      </div>
+      <div class="slider-group">
+        <label>🏠 하우스 온주밀감 생산성이 좋아진다면?</label><br>
+        <input type="range" id="하우스_온주밀감_생산성" min="20" max="40" step="0.1" value="25" oninput="updatePrediction()">
+        <span class="value" id="val_하우스_온주밀감_생산성">25</span>
+      </div>
+      <div class="slider-group">
+        <label>❄️ 월동 온주밀감 생산성이 좋아진다면?</label><br>
+        <input type="range" id="월동_온주밀감_생산성" min="20" max="40" step="0.1" value="28" oninput="updatePrediction()">
+        <span class="value" id="val_월동_온주밀감_생산성">28</span>
+      </div>
+
+      <div class="slider-group">
+        <label>💨 평균 바람세기가 강해진다면?</label><br>
+        <input type="range" id="WS_AVG" min="14" max="19" step="0.1" value="16" oninput="updatePrediction()">
+        <span class="value" id="val_WS_AVG">16</span>
+      </div>
+      <div class="slider-group">
+        <label>☔ 비 오는 날이 많아진다면?</label><br>
+        <input type="range" id="RN_DAY" min="1000" max="1300" step="10" value="1150" oninput="updatePrediction()">
+        <span class="value" id="val_RN_DAY">1150</span>
+      </div>
+
+      <div class="slider-group">
+        <label>✈️ 해외에서 한국 감귤을 더 찾는다면?</label><br>
+        <input type="range" id="감귤_과일수출량" min="1000" max="7000" step="100" value="4000" oninput="updatePrediction()">
+        <span class="value" id="val_감귤_과일수출량">4000</span>
+      </div>
+      <div class="slider-group">
+        <label>🥤 해외에서 한국산 과일주스를 더 원한다면?</label><br>
+        <input type="range" id="과실주스_과일수출량" min="50000" max="150000" step="1000" value="100000" oninput="updatePrediction()">
+        <span class="value" id="val_과실주스_과일수출량">100000</span>
+      </div>
+
+      <div class="slider-group">
+        <label>🌱 감귤밭 면적이 더 넓어진다면?</label><br>
+        <input type="range" id="감귤_면적" min="20" max="30" step="0.1" value="22" oninput="updatePrediction()">
+        <span class="value" id="val_감귤_면적">22</span>
+      </div>
+
+    </div>
+
+    <div class="prediction-circle" id="prediction-circle">
+      <div>
+        <div>예측 생산량</div>
+        <span id="prediction">---</span><span style="font-size:0.7em; opacity:0.8;"> 천톤</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function updatePrediction() {
+      const inputData = {
+        "감귤_과일소비량": parseFloat(document.getElementById("감귤_과일소비량").value),
+        "복숭아_과일소비량": parseFloat(document.getElementById("복숭아_과일소비량").value),
+        "노지_온주밀감_생산성": parseFloat(document.getElementById("노지_온주밀감_생산성").value),
+        "하우스_온주밀감_생산성": parseFloat(document.getElementById("하우스_온주밀감_생산성").value),
+        "월동_온주밀감_생산성": parseFloat(document.getElementById("월동_온주밀감_생산성").value),
+        "WS_AVG": parseFloat(document.getElementById("WS_AVG").value),
+        "RN_DAY": parseFloat(document.getElementById("RN_DAY").value),
+        "감귤_과일수출량": parseFloat(document.getElementById("감귤_과일수출량").value),
+        "과실주스_과일수출량": parseFloat(document.getElementById("과실주스_과일수출량").value),
+        "감귤_면적": parseFloat(document.getElementById("감귤_면적").value)
+      };
+
+      for (let key in inputData) {
+        document.getElementById("val_" + key).innerText = inputData[key];
+      }
+
+      const response = await fetch("http://127.0.0.1:8000/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(inputData)
+      });
+
+      const data = await response.json();
+      const y_pred = data.y_pred;
+
+      document.getElementById("prediction").innerText = y_pred.toFixed(2);
+
+      const circle = document.getElementById("prediction-circle");
+      const minVal = 380;
+      const maxVal = 840;
+      const ratio = Math.min(1, Math.max(0, (y_pred - minVal) / (maxVal - minVal)));
+
+      const startColor = {r: 255, g: 200, b: 120};
+      const endColor   = {r: 255, g: 100, b: 50};
+      const r = Math.round(startColor.r + ratio * (endColor.r - startColor.r));
+      const g = Math.round(startColor.g + ratio * (endColor.g - startColor.g));
+      const b = Math.round(startColor.b + ratio * (endColor.b - startColor.b));
+
+      circle.style.background = `radial-gradient(circle at 30% 30%, rgb(${r},${g},${b}), #ff7f50)`;
+    }
+
+    updatePrediction();
+  </script>
+</body>
+</html>
